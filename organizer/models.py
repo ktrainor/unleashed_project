@@ -13,11 +13,13 @@ class Startup(models.Model):
     founded_date = models.DateField()
     contact = models.EmailField()
     website = models.URLField()
+    tags = models.ManyToManyField(Tag)
 
 
 class NewsLink(models.Model):
     title = models.CharField(max_length=63)
     pub_date = models.DateField()
     link = models.URLField()
+    startup = models.ForeignKey(Startup)
 
 
