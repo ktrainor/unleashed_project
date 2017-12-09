@@ -1,3 +1,11 @@
+{% extends parent_template|default:"organizer/base_blog.html" %}
+
+{% block title %}
+{{ block.super }} - {{ post.title|title }}
+{% endblock %}
+
+{% block content %}
+
     <article>
 
         <header>
@@ -45,3 +53,5 @@
     {% endif %}
 
     </article>
+
+{% endblock %}
