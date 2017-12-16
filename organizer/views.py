@@ -14,7 +14,6 @@ def homepage(request):
 
 
 def tag_detail(request, slug):
-    # slug = ?
     tag = Tag.objects.get(slug__iexact=slug)
     template = loader.get_template(
         'organizer/tag_detail.html')
