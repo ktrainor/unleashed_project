@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import homepage, tag_detail, tag_list
+from .views import tag_detail, tag_list
 
 urlpatterns = [
     url(r'^tag/$',
