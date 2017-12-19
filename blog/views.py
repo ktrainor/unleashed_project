@@ -1,18 +1,10 @@
-from django.shortcuts import get_object_or_404, render
-from django.views.generic import View
+from django.shortcuts import (
+    get_object_or_404, render)
 from django.views.decorators.http import \
     require_http_methods
+from django.views.generic import View
 
 from .models import Post
-
-
-class PostList(View):
-
-    def get(self, request):
-        return render(
-            request,
-            'blog/post_list.html',
-            {'post_list': Post.objects.all()})
 
 
 @require_http_methods(['HEAD', 'GET'])
@@ -24,7 +16,14 @@ def post_detail(request, year, month, slug):
         slug=slug)
     return render(
         request,
-        'blog/post_list.html',
-        {'post': post}
-    )
+        'blog/post_detail.html',
+        {'post': post})
 
+
+class PostList(View):
+
+    def get(self, request):
+        return render(
+            request,
+            'blog/post_list.html',
+            {'post_list': Post.objects.all()})
