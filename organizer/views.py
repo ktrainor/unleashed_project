@@ -1,6 +1,7 @@
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
+from organizer.forms import TagForm
 from .models import Startup, Tag
 
 
@@ -18,6 +19,20 @@ def startup_detail(request, slug):
         request,
         'organizer/startup_detail.html',
         {'startup': startup})
+
+
+def tag_create(request):
+    if request.method == 'POST':
+        form = TagForm(request.POST)
+        if form.is_valid():
+            new_tag = form.save()
+            return redirect(new_tag)
+    else:  # request.method != 'POST'
+        form = TagForm()
+    return render(
+        request,
+        'organizer/tag_form.html',
+        {'form': form})
 
 
 def tag_list(request):
