@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from .views import (startup_list, startup_detail,
-                    tag_detail, tag_list, tag_create)
+                    tag_detail, tag_list, tag_create, TagCreate)
 
 urlpatterns = [
     url(r'^startup/$',
@@ -14,7 +14,7 @@ urlpatterns = [
         tag_list,
         name = 'organizer_tag_list'),
     url(r'^tag/create/$',
-        tag_create,
+        TagCreate.as_view(),
         name='organizer_tag_create'),
     url(r'^tag/(?P<slug>[\w\-]+)/$',
         tag_detail,
