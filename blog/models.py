@@ -1,8 +1,12 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+
 from organizer.models import Tag, Startup
 
-# Create your models here.
+
+# Model Field Reference
+# https://docs.djangoproject.com/en/1.8/ref/models/fields/
+
 
 class Post(models.Model):
     title = models.CharField(max_length=63)
@@ -36,4 +40,9 @@ class Post(models.Model):
                      "month": self.pub_date.month,
                      'slug': self.slug})
 
-
+    def get_update_url(self):
+        return reverse(
+            'blog_post_update',
+            kwargs={'year': self.pub_date.year,
+                    'month': self.pub_date.month,
+                    'slug': self.slug})
