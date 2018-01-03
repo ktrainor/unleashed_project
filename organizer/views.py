@@ -1,5 +1,5 @@
 
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import View
 
 from organizer.forms import StartupForm, TagForm, NewsLinkForm
