@@ -1,10 +1,14 @@
 from django.conf.urls import url
 
 from .views import (startup_list, startup_detail,
-                    tag_detail, tag_list, StartupCreate, TagCreate)
+                    tag_detail, tag_list,
+                    StartupCreate, TagCreate, NewsLinkCreate)
 
 
 urlpatterns = [
+    url(r'^newslink/create/$',
+        NewsLinkCreate.as_view(),
+        name = 'organizer_newslink_create'),
     url(r'^startup/$',
         startup_list,
         name='organizer_startup_list'),
