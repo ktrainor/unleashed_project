@@ -13,6 +13,13 @@ class NewsLinkCreate(ObjectCreateMixin, View):
     template_name = 'organizer/newslink_form.html'
 
 
+class NewsLinkUpdate(View):
+    form_class = NewsLinkForm
+    template_name = (
+        'orgnizer/newslink_form_update.html'
+    )
+
+
 class StartupCreate(ObjectCreateMixin, View):
     form_class = StartupForm
     template_name = 'organizer/startup_form.html'
