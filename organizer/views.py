@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import View
 
 from organizer.forms import StartupForm, TagForm, NewsLinkForm
@@ -28,6 +28,24 @@ class NewsLinkUpdate(View):
         }
         return render(
             request, self.template_name, context)
+
+    def post(self, request, pk):
+        newslink = get_object_or_404(
+            NewsLink, pk=pk)
+        bound_form = self.form_class(
+            request.POST, instance=newslink)
+        if bound_form.is_valid():
+            new_newslink = bound_form.save()
+            return redirect(new_newslink)
+        else:
+            context = {
+                'form': bound_form,
+                'newslink': newslink,
+            }
+            return render(
+                request,
+                self.template_name,
+                context)
 
 
 class StartupCreate(ObjectCreateMixin, View):
