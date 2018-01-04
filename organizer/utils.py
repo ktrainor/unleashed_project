@@ -1,5 +1,5 @@
-from django.shortcuts import (redirect, render,
-            get_object_or_404)
+from django.shortcuts import (
+    get_object_or_404, redirect, render)
 
 
 class ObjectCreateMixin:
@@ -31,7 +31,7 @@ class ObjectUpdateMixin:
 
     def get(self, request, slug):
         obj = get_object_or_404(
-            self.model, slug_iexact=slug)
+            self.model, slug__iexact=slug)
         context = {
             'form': self.form_class(instance=obj),
             self.model.__name__.lower(): obj,
