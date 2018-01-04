@@ -1,4 +1,5 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import (redirect, render,
+            get_object_or_404)
 
 
 class ObjectCreateMixin:
@@ -21,3 +22,19 @@ class ObjectCreateMixin:
                 request,
                 self.template_name,
                 {'form': bound_form})
+
+
+class ObjectUpdateMixin:
+    form_class = None
+    model = None
+    template_name = ''
+
+    def get(self, request, slug):
+        obj = get_object_or_404(
+            self.model, slug_iexact=slug)
+        context = {
+            'form': self.form_class(instance=obj),
+            self.model.__name__.lower(): obj,
+        }
+        return render(
+            request, self.template_name, context)
