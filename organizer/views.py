@@ -1,10 +1,12 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import (
+    get_object_or_404, redirect, render)
 from django.views.generic import View
 
-from organizer.forms import StartupForm, TagForm, NewsLinkForm
-from .models import Startup, Tag, NewsLink
-
-from .utils import ObjectCreateMixin
+from .forms import (
+    NewsLinkForm, StartupForm, TagForm)
+from .models import NewsLink, Startup, Tag
+from .utils import (
+    ObjectCreateMixin, ObjectUpdateMixin)
 
 
 class NewsLinkCreate(ObjectCreateMixin, View):
@@ -15,16 +17,15 @@ class NewsLinkCreate(ObjectCreateMixin, View):
 class NewsLinkUpdate(View):
     form_class = NewsLinkForm
     template_name = (
-        'orgnizer/newslink_form_update.html'
-    )
+        'organizer/newslink_form_update.html')
 
     def get(self, request, pk):
         newslink = get_object_or_404(
-            NewsLink,pk=pk)
+            NewsLink, pk=pk)
         context = {
             'form': self.form_class(
                 instance=newslink),
-             'newslink': newslink,
+            'newslink': newslink,
         }
         return render(
             request, self.template_name, context)
@@ -53,13 +54,6 @@ class StartupCreate(ObjectCreateMixin, View):
     template_name = 'organizer/startup_form.html'
 
 
-def startup_list(request):
-    return render(
-        request,
-        'organizer/startup_list.html',
-        {'startup_list': Startup.objects.all()})
-
-
 def startup_detail(request, slug):
     startup = get_object_or_404(
         Startup, slug__iexact=slug)
@@ -69,16 +63,16 @@ def startup_detail(request, slug):
         {'startup': startup})
 
 
+def startup_list(request):
+    return render(
+        request,
+        'organizer/startup_list.html',
+        {'startup_list': Startup.objects.all()})
+
+
 class TagCreate(ObjectCreateMixin, View):
     form_class = TagForm
     template_name = 'organizer/tag_form.html'
-
-
-def tag_list(request):
-    return render(
-        request,
-        'organizer/tag_list.html',
-        {'tag_list': Tag.objects.all})
 
 
 def tag_detail(request, slug):
@@ -89,3 +83,16 @@ def tag_detail(request, slug):
         'organizer/tag_detail.html',
         {'tag': tag})
 
+
+def tag_list(request):
+    return render(
+        request,
+        'organizer/tag_list.html',
+        {'tag_list': Tag.objects.all()})
+
+
+class TagUpdate(ObjectUpdateMixin, View):
+    form_class = TagForm
+    model = Tag
+    template_name = (
+        'organizer/tag_form_update.html')
