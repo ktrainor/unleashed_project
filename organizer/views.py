@@ -1,9 +1,8 @@
-
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import View
 
 from organizer.forms import StartupForm, TagForm, NewsLinkForm
-from .models import Startup, Tag
+from .models import Startup, Tag, NewsLink
 
 from .utils import ObjectCreateMixin
 
@@ -18,6 +17,17 @@ class NewsLinkUpdate(View):
     template_name = (
         'orgnizer/newslink_form_update.html'
     )
+
+    def get(self, request, pk):
+        newslink = get_object_or_404(
+            NewsLink,pk=pk)
+        context = {
+            'form': self.form_class(
+                instance=newslink),
+             'newslink': newslink,
+        }
+        return render(
+            request, self.template_name, context)
 
 
 class StartupCreate(ObjectCreateMixin, View):
