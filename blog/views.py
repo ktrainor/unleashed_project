@@ -43,6 +43,15 @@ class PostDelete(View):
             'blog/post_confirm_delete.html',
             {'post': post})
 
+    def post(self, request, year, month, slug):
+        post = get_object_or_404(
+            Post,
+            pub_date__year=year,
+            pub_date__month=month,
+            slug__iexact=slug)
+        post.delete()
+        return redirect('blog_post_list')
+
 
 @require_http_methods(['HEAD', 'GET'])
 def post_detail(request, year, month, slug):
